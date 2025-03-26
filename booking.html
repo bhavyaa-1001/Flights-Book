@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation - Ryanair India</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="permanent-animations.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'ryanair-blue': '#073590',
+                        'ryanair-yellow': '#FFD700'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .theme-transition {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in-up {
+            animation: slideInUp 0.7s ease-in-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 theme-transition">
+    <!-- Navigation -->
+    <nav class="bg-ryanair-blue text-white dark:bg-gray-900">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-plane text-ryanair-yellow text-2xl mr-2"></i>
+                    <span class="text-xl font-bold">Ryanair India</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="hover:text-ryanair-yellow">Home</a>
+                    <a href="search.html" class="hover:text-ryanair-yellow">Search Flights</a>
+                    <a href="bookings.html" class="hover:text-ryanair-yellow">My Bookings</a>
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                        <i id="theme-toggle-dark-icon" class="fas fa-moon text-gray-800 hidden"></i>
+                        <i id="theme-toggle-light-icon" class="fas fa-sun text-yellow-500"></i>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-theme-toggle" class="p-2 mr-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                        <i id="mobile-theme-toggle-dark-icon" class="fas fa-moon text-gray-800 hidden"></i>
+                        <i id="mobile-theme-toggle-light-icon" class="fas fa-sun text-yellow-500"></i>
+                    </button>
+                    <button class="md:hidden" id="mobile-menu-button">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="hidden md:hidden mt-4" id="mobile-menu">
+                <a href="index.html" class="block py-2 hover:text-ryanair-yellow">Home</a>
+                <a href="search.html" class="block py-2 hover:text-ryanair-yellow">Search Flights</a>
+                <a href="bookings.html" class="block py-2 hover:text-ryanair-yellow">My Bookings</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Booking Form -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6 booking-form">
+                <h2 class="text-2xl font-bold mb-6 dark:text-white">Passenger Details</h2>
+                <form id="bookingForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 form-row">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">First Name</label>
+                            <input type="text" name="firstName" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
+                            <input type="text" name="lastName" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 form-row">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                            <input type="email" name="email" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Phone</label>
+                            <input type="tel" name="phone" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">Address</label>
+                        <textarea name="address" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600" rows="3"></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 form-row">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Date of Birth</label>
+                            <input type="date" name="dateOfBirth" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Passport Number</label>
+                            <input type="text" name="passportNumber" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 form-row">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Passport Expiry</label>
+                            <input type="date" name="passportExpiry" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Nationality</label>
+                            <input type="text" name="nationality" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                    </div>
+                    <div class="border-t dark:border-gray-700 pt-6 payment-section">
+                        <h3 class="text-xl font-bold mb-4 dark:text-white">Payment Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 form-row">
+                            <div>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">Card Number</label>
+                                <input type="text" name="cardNumber" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">Card Holder Name</label>
+                                <input type="text" name="cardHolder" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 form-row">
+                            <div>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">Expiry Date</label>
+                                <input type="text" name="expiryDate" placeholder="MM/YY" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">CVV</label>
+                                <input type="text" name="cvv" required class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">Amount</label>
+                                <input type="text" id="totalAmount" readonly class="w-full p-2 border rounded-lg bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-ryanair-blue text-white py-3 rounded-lg font-bold hover:bg-blue-800 transition duration-300">
+                        Confirm Booking
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-ryanair-blue dark:bg-gray-900 text-white py-8 theme-transition">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">About Ryanair</h3>
+                    <p class="text-gray-300">Europe's largest low-cost carrier now in India</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-ryanair-yellow">About Us</a></li>
+                        <li><a href="#" class="hover:text-ryanair-yellow">Contact</a></li>
+                        <li><a href="#" class="hover:text-ryanair-yellow">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li>Email: support@ryanair.in</li>
+                        <li>Phone: 1800-123-4567</li>
+                        <li>Address: New Delhi, India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p>&copy; 2024 Ryanair India. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Get selected flight from localStorage
+        const selectedFlight = JSON.parse(localStorage.getItem('selectedFlight') || '{}');
+
+        if (selectedFlight && selectedFlight.price) {
+            document.getElementById('totalAmount').value = `₹${selectedFlight.price}`;
+        }
+
+        // Handle form submission
+        document.getElementById('bookingForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formElements = e.target.elements;
+            const passengerDetails = {
+                firstName: formElements.firstName.value,
+                lastName: formElements.lastName.value,
+                email: formElements.email.value,
+                phone: formElements.phone.value,
+                address: formElements.address.value,
+                dateOfBirth: formElements.dateOfBirth.value,
+                passportNumber: formElements.passportNumber.value,
+                passportExpiry: formElements.passportExpiry.value,
+                nationality: formElements.nationality.value
+            };
+
+            // Create booking object
+            const booking = {
+                ...selectedFlight,
+                passengerDetails,
+                bookingDate: new Date().toISOString(),
+                bookingId: Math.random().toString(36).substr(2, 9),
+                status: 'confirmed'
+            };
+
+            // Save to localStorage
+            const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            bookings.push(booking);
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+
+            // Redirect to bookings page
+            window.location.href = 'bookings.html';
+        });
+    </script>
+    <script src="theme-toggle.js"></script>
+    <script src="scroll-animations.js"></script>
+    <script src="persistent-animations.js"></script>
+    <script src="chat-support.js"></script>
+</body>
+</html> 

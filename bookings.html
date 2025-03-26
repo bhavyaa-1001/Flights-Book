@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - Ryanair India</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="permanent-animations.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'ryanair-blue': '#073590',
+                        'ryanair-yellow': '#FFD700'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .theme-transition {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in-left {
+            animation: slideInLeft 0.7s ease-in-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-slide-in-up {
+            animation: slideInUp 0.7s ease-in-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 theme-transition">
+    <!-- Navigation -->
+    <nav class="bg-ryanair-blue text-white dark:bg-gray-900">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-plane text-ryanair-yellow text-2xl mr-2"></i>
+                    <span class="text-xl font-bold">Ryanair India</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="hover:text-ryanair-yellow">Home</a>
+                    <a href="search.html" class="hover:text-ryanair-yellow">Search Flights</a>
+                    <a href="bookings.html" class="hover:text-ryanair-yellow">My Bookings</a>
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                        <i id="theme-toggle-dark-icon" class="fas fa-moon text-gray-800 hidden"></i>
+                        <i id="theme-toggle-light-icon" class="fas fa-sun text-yellow-500"></i>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-theme-toggle" class="p-2 mr-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                        <i id="mobile-theme-toggle-dark-icon" class="fas fa-moon text-gray-800 hidden"></i>
+                        <i id="mobile-theme-toggle-light-icon" class="fas fa-sun text-yellow-500"></i>
+                    </button>
+                    <button class="md:hidden" id="mobile-menu-button">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="hidden md:hidden mt-4" id="mobile-menu">
+                <a href="index.html" class="block py-2 hover:text-ryanair-yellow">Home</a>
+                <a href="search.html" class="block py-2 hover:text-ryanair-yellow">Search Flights</a>
+                <a href="bookings.html" class="block py-2 hover:text-ryanair-yellow">My Bookings</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Bookings List -->
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold mb-8 dark:text-white bookings-title">My Bookings</h2>
+        <div id="bookingsList" class="space-y-6 bookings-list">
+            <!-- Bookings will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-ryanair-blue dark:bg-gray-900 text-white py-8 theme-transition">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">About Ryanair</h3>
+                    <p class="text-gray-300">Europe's largest low-cost carrier now in India</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-ryanair-yellow">About Us</a></li>
+                        <li><a href="#" class="hover:text-ryanair-yellow">Contact</a></li>
+                        <li><a href="#" class="hover:text-ryanair-yellow">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li>Email: support@ryanair.in</li>
+                        <li>Phone: 1800-123-4567</li>
+                        <li>Address: New Delhi, India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p>&copy; 2024 Ryanair India. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Get bookings from localStorage
+        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+        const bookingsList = document.getElementById('bookingsList');
+
+        // Display bookings
+        function displayBookings() {
+            if (bookings.length === 0) {
+                bookingsList.innerHTML = `
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center booking-card">
+                        <p class="text-gray-600 dark:text-gray-300">No bookings found</p>
+                        <a href="search.html" class="inline-block mt-4 bg-ryanair-blue text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition duration-300">
+                            Search Flights
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            bookingsList.innerHTML = bookings.map((booking, index) => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 booking-card" data-delay="${index * 100}">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-bold dark:text-white">${booking.airline} ${booking.flightNumber}</h3>
+                            <p class="text-gray-600 dark:text-gray-300">${booking.from} → ${booking.to}</p>
+                            <p class="text-gray-600 dark:text-gray-300">${booking.departure} - ${booking.arrival}</p>
+                            <p class="text-gray-600 dark:text-gray-300">Booking ID: ${booking.bookingId}</p>
+                            <p class="text-gray-600 dark:text-gray-300">Status: <span class="font-bold ${booking.status === 'confirmed' ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}">${booking.status}</span></p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold text-ryanair-blue dark:text-ryanair-yellow">₹${booking.price}</p>
+                            ${booking.status === 'confirmed' ? `
+                                <button onclick="downloadTicket('${booking.bookingId}')" class="mt-2 bg-ryanair-blue text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition duration-300">
+                                    Download Ticket
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                    ${booking.passengerDetails ? `
+                        <div class="mt-6 border-t dark:border-gray-700 pt-6">
+                            <h4 class="font-bold mb-2 dark:text-white">Passenger Details</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-300">Name: ${booking.passengerDetails.firstName} ${booking.passengerDetails.lastName}</p>
+                                    <p class="text-gray-600 dark:text-gray-300">Email: ${booking.passengerDetails.email}</p>
+                                    <p class="text-gray-600 dark:text-gray-300">Phone: ${booking.passengerDetails.phone}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-300">Passport: ${booking.passengerDetails.passportNumber}</p>
+                                    <p class="text-gray-600 dark:text-gray-300">Nationality: ${booking.passengerDetails.nationality}</p>
+                                    <p class="text-gray-600 dark:text-gray-300">DOB: ${booking.passengerDetails.dateOfBirth}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Download ticket function
+        function downloadTicket(bookingId) {
+            const booking = bookings.find(b => b.bookingId === bookingId);
+            if (booking) {
+                // Create ticket content
+                const ticketContent = `
+                    Ryanair India - Flight Ticket
+                    Booking ID: ${booking.bookingId}
+                    Flight: ${booking.airline} ${booking.flightNumber}
+                    From: ${booking.from}
+                    To: ${booking.to}
+                    Departure: ${booking.departure}
+                    Arrival: ${booking.arrival}
+                    Passenger: ${booking.passengerDetails.firstName} ${booking.passengerDetails.lastName}
+                    Date: ${new Date(booking.bookingDate).toLocaleDateString()}
+                `;
+
+                // Create and download file
+                const blob = new Blob([ticketContent], { type: 'text/plain' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `ticket-${bookingId}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            }
+        }
+
+        // Initial display
+        displayBookings();
+    </script>
+    <script src="theme-toggle.js"></script>
+    <script src="scroll-animations.js"></script>
+    <script src="persistent-animations.js"></script>
+    <script src="chat-support.js"></script>
+</body>
+</html> 

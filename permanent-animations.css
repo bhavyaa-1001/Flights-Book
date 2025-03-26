@@ -1,0 +1,373 @@
+/* Permanent Animation Styles */
+
+/* Rotation animations */
+.rotate-hover {
+    transition: transform 0.6s ease;
+}
+
+.rotate-hover:hover {
+    transform: rotate(5deg);
+}
+
+@keyframes rotate-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate-slow {
+    animation: rotate-animation 8s linear infinite;
+}
+
+.rotate-medium {
+    animation: rotate-animation 5s linear infinite;
+}
+
+.rotate-fast {
+    animation: rotate-animation 2s linear infinite;
+}
+
+/* Pulse animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Float animations */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.float-animation {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Shake animations */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-3px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(3px);
+    }
+}
+
+.shake-animation {
+    animation: shake 6s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+/* Permanent fade in animations */
+@keyframes permanent-fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.permanent-fade-in {
+    animation: permanent-fade-in 1s ease-in-out forwards;
+}
+
+/* Permanent slide animations */
+@keyframes permanent-slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.permanent-slide-up {
+    animation: permanent-slide-up 0.7s ease-in-out forwards;
+}
+
+@keyframes permanent-slide-left {
+    0% {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.permanent-slide-left {
+    animation: permanent-slide-left 0.7s ease-in-out forwards;
+}
+
+/* Flip card animations */
+.flip-container {
+    perspective: 1000px;
+    height: 100%;
+    min-height: 250px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.flip-container:hover {
+    z-index: 10;
+}
+
+.flip-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-container:hover .flip-card {
+    transform: rotateY(180deg);
+}
+
+.flip-front, .flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 0.5rem;
+    transform-style: preserve-3d;
+}
+
+.flip-front {
+    z-index: 2;
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+}
+
+.flip-back {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+    background: #073590;
+}
+
+.dark .flip-back {
+    background: #1f2937;
+}
+
+.flip-back h4,
+.flip-back p,
+.flip-back div {
+    color: white !important;
+}
+
+/* Glow animations */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+    }
+}
+
+.glow-animation {
+    animation: glow 3s ease-in-out infinite;
+}
+
+/* Price comparison table hover effect */
+.price-comparison:hover {
+    box-shadow: 0 0 15px rgba(7, 53, 144, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+.price-comparison tr:hover {
+    background-color: rgba(255, 215, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.price-comparison tr:hover td {
+    color: #000000;
+    font-weight: 500;
+}
+
+.price-comparison tr:hover td:first-child {
+    color: #073590;
+    font-weight: 700;
+}
+
+/* Special animations for back navigation */
+.back-navigation .permanent-slide-up {
+    animation-duration: 0.5s;
+}
+
+.back-navigation .destination-card {
+    animation: permanent-fade-in 0.8s ease-in-out forwards;
+    animation-delay: 0.2s;
+}
+
+.back-navigation .challenge-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.back-navigation .challenge-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.back-navigation .challenge-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Deal cards and countdown timer animations */
+.deal-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.deal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    z-index: 5;
+}
+
+.deal-card .bg-red-600 {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    z-index: 2;
+}
+
+.deal-card .scale-animation {
+    transform: scale(1.1);
+    animation: attention-pulse 1.5s infinite;
+}
+
+@keyframes attention-pulse {
+    0%, 100% {
+        background-color: #e53e3e;
+    }
+    50% {
+        background-color: #f56565;
+    }
+}
+
+.urgent-countdown div {
+    animation: urgent-pulse 1s infinite;
+}
+
+@keyframes urgent-pulse {
+    0%, 100% {
+        background-color: #073590;
+    }
+    50% {
+        background-color: #e53e3e;
+    }
+}
+
+.dark .urgent-countdown div {
+    animation: urgent-pulse-dark 1s infinite;
+}
+
+@keyframes urgent-pulse-dark {
+    0%, 100% {
+        background-color: #FFD700;
+    }
+    50% {
+        background-color: #ff8800;
+    }
+}
+
+.deal-expired {
+    opacity: 0.7;
+}
+
+.deal-expired::after {
+    content: "EXPIRED";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    background-color: rgba(229, 62, 62, 0.9);
+    color: white;
+    padding: 5px 20px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+/* Z-index management */
+.z-layer-1 {
+    position: relative;
+    z-index: 1;
+}
+
+.z-layer-2 {
+    position: relative;
+    z-index: 2;
+}
+
+.z-layer-3 {
+    position: relative;
+    z-index: 3;
+}
+
+.z-layer-top {
+    position: relative;
+    z-index: 10;
+}
+
+/* Fix for overlapping elements */
+.travel-tool-card, 
+.advantage-card, 
+.challenge-card, 
+.destination-card,
+.deal-card {
+    position: relative;
+    overflow: visible;
+}
+
+/* Ensure fixed elements don't overlap */
+#chat-widget {
+    z-index: 9999;
+}
+
+/* Prevent stacking context issues with transforms */
+.theme-transition {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure sections stack properly */
+.container {
+    position: relative;
+} 

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryanair India - Book Flights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="permanent-animations.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'ryanair-blue': '#073590',
+                        'ryanair-yellow': '#FFD700'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in-left {
+            animation: slideInLeft 0.7s ease-in-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-slide-in-right {
+            animation: slideInRight 0.7s ease-in-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-slide-in-up {
+            animation: slideInUp 0.7s ease-in-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-zoom-in {
+            animation: zoomIn 0.5s ease-in-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+
+        .theme-transition {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 theme-transition">
+
+    <nav class="bg-ryanair-blue text-white dark:bg-gray-900">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-plane text-ryanair-yellow text-2xl mr-2"></i>
+                    <span class="text-xl font-bold">Ryanair India</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="hover:text-ryanair-yellow">Home</a>
+                    <a href="search.html" class="hover:text-ryanair-yellow">Search Flights</a>
+                    <a href="bookings.html" class="hover:text-ryanair-yellow">My Bookings</a>
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                        <i id="theme-toggle-dark-icon" class="fas fa-moon text-gray-800 hidden"></i>
+                        <i id="theme-toggle-light-icon" class="fas fa-sun text-yellow-500"></i>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-theme-toggle" class="p-2 mr-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                        <i id="mobile-theme-toggle-dark-icon" class="fas fa-moon text-gray-800 hidden"></i>
+                        <i id="mobile-theme-toggle-light-icon" class="fas fa-sun text-yellow-500"></i>
+                    </button>
+                    <button class="md:hidden" id="mobile-menu-button">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="hidden md:hidden mt-4" id="mobile-menu">
+                <a href="index.html" class="block py-2 hover:text-ryanair-yellow">Home</a>
+                <a href="search.html" class="block py-2 hover:text-ryanair-yellow">Search Flights</a>
+                <a href="bookings.html" class="block py-2 hover:text-ryanair-yellow">My Bookings</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="relative h-[500px] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="container mx-auto px-4 h-full flex items-center relative">
+            <div class="text-white max-w-2xl hero-content">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">Fly to India with Ryanair</h1>
+                <p class="text-xl mb-8">Discover amazing destinations across India with our low-cost flights</p>
+                <a href="search.html" class="bg-ryanair-yellow text-ryanair-blue px-8 py-3 rounded-lg font-bold hover:bg-yellow-400 transition duration-300">
+                    Search Flights
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold text-center mb-12 dark:text-white">Popular Destinations</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden destination-card">
+                <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Delhi" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2 dark:text-white">Delhi</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Starting from ₹4,999</p>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden destination-card">
+                <img src="https://images.unsplash.com/photo-1566552881560-0be862a7c445?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Mumbai" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2 dark:text-white">Mumbai</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Starting from ₹5,499</p>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden destination-card">
+                <img src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Bangalore" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2 dark:text-white">Bangalore</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Starting from ₹4,799</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Special Deals Section -->
+    <div class="bg-ryanair-yellow dark:bg-ryanair-blue py-16 theme-transition relative z-10">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-6 text-ryanair-blue dark:text-white">Special Deals of the Week</h2>
+            <p class="text-center text-ryanair-blue dark:text-white mb-12">Limited time offers - Book now!</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Deal 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden deal-card min-h-[500px]">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1534008897995-27a23e859048?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Goa" class="w-full h-48 object-cover">
+                        <div class="absolute top-0 right-0 bg-red-600 text-white py-1 px-3 rounded-bl-lg font-bold">
+                            -30%
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 dark:text-white">Mumbai to Goa</h3>
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-gray-800 dark:text-gray-300">Return trip</p>
+                            <div class="flex items-center">
+                                <span class="line-through text-gray-500 mr-2">₹8,999</span>
+                                <span class="text-red-600 dark:text-red-400 font-bold">₹6,299</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-1">Offer ends in:</p>
+                            <div class="countdown-timer flex justify-center space-x-2" data-end="2024-08-31T23:59:59">
+                                <div class="bg-ryanair-blue dark:bg-ryanair-yellow rounded-md p-2 text-white dark:text-ryanair-blue text-center min-w-[50px]">
+                                    <span class="countdown-days font-bold text-lg">00</span>
+                                    <p class="text-xs">Days</p>
+                                </div>
+                                <div class="bg-ryanair-blue dark:bg-ryanair-yellow rounded-md p-2 text-white dark:text-ryanair-blue text-center min-w-[50px]">
+                                    <span class="countdown-hours font-bold text-lg">00</span>
+                                    <p class="text-xs">Hours</p>
+                                </div>
+                                <div class="bg-ryanair-blue dark:bg-ryanair-yellow rounded-md p-2 text-white dark:text-ryanair-blue text-center min-w-[50px]">
+                                    <span class="countdown-minutes font-bold text-lg">00</span>
+                                    <p class="text-xs">Mins</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="search.html" class="block text-center mt-4 bg-ryanair-blue text-white dark:bg-ryanair-yellow dark:text-ryanair-blue py-2 rounded-lg font-bold hover:bg-blue-800 dark:hover:bg-yellow-400 transition duration-300">
+                            Book Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Deal 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden deal-card min-h-[500px]">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1585484173095-3c9ecdb32907?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Jaipur" class="w-full h-48 object-cover">
+                        <div class="absolute top-0 right-0 bg-red-600 text-white py-1 px-3 rounded-bl-lg font-bold">
+                            -25%
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 dark:text-white">Delhi to Jaipur</h3>
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-gray-800 dark:text-gray-300">Return trip</p>
+                            <div class="flex items-center">
+                                <span class="line-through text-gray-500 mr-2">₹6,599</span>
+                                <span class="text-red-600 dark:text-red-400 font-bold">₹4,949</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-1">Offer ends in:</p>
+                            <div class="countdown-timer flex justify-center space-x-2" data-end="2024-09-10T23:59:59">
+                                <div class="bg-ryanair-blue dark:bg-ryanair-yellow rounded-md p-2 text-white dark:text-ryanair-blue text-center min-w-[50px]">
+                                    <span class="countdown-days font-bold text-lg">00</span>
+                                    <p class="text-xs">Days</p>
+                                </div>
+                                <div class="bg-ryanair-blue dark:bg-ryanair-yellow rounded-md p-2 text-white dark:text-ryanair-blue text-center min-w-[50px]">
+                                    <span class="countdown-hours font-bold text-lg">00</span>
+                                    <p class="text-xs">Hours</p>
+                                </div>
+                                <div class="bg-ryanair-blue dark:bg-ryanair-yellow rounded-md p-2 text-white dark:text-ryanair-blue text-center min-w-[50px]">
+                                    <span class="countdown-minutes font-bold text-lg">00</span>
+                                    <p class="text-xs">Mins</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="search.html" class="block text-center mt-4 bg-ryanair-blue text-white dark:bg-ryanair-yellow dark:text-ryanair-blue py-2 rounded-lg font-bold hover:bg-blue-800 dark:hover:bg-yellow-400 transition duration-300">
+                            Book Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Deal 3 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden deal-card min-h-[500px]">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1631867675167-90a456a90863?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Kochi" class="w-full h-48 object-cover">
+                        <div class="absolute top-0 right-0 bg-red-600 text-white py-1 px-3 rounded-bl-lg font-bold">
+                            -35%
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 dark:text-white">Bangalore to Kochi</h3>
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-gray-800 dark:text-gray-300">Return trip</p>
+                            <div class="flex items-center">
+                                <span class="line-through text-gray-500 mr-2">₹7,499</span>
+                                <span class="text-red-600 dark:text-red-400 font-bold">₹4,874</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-1">Offer ends in:</p>
+                            <div class="countdown-timer flex justify-center space-x-2" data-end="2024-09-05T23:59:59">
+                                <div class="bg-ryanair-blue dark:bg-ryanair-yellow rounded-md p-2 text-white dark:text-ryanair-blue text-center min-w-[50px]">
+                                    <span class="countdown-days font-bold text-lg">00</span>
+                                    <p class="text-xs">Days</p>
+                                </div>
+                                <div class="bg-ryanair-blue dark:bg-ryanair-yellow rounded-md p-2 text-white dark:text-ryanair-blue text-center min-w-[50px]">
+                                    <span class="countdown-hours font-bold text-lg">00</span>
+                                    <p class="text-xs">Hours</p>
+                                </div>
+                                <div class="bg-ryanair-blue dark:bg-ryanair-yellow rounded-md p-2 text-white dark:text-ryanair-blue text-center min-w-[50px]">
+                                    <span class="countdown-minutes font-bold text-lg">00</span>
+                                    <p class="text-xs">Mins</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="search.html" class="block text-center mt-4 bg-ryanair-blue text-white dark:bg-ryanair-yellow dark:text-ryanair-blue py-2 rounded-lg font-bold hover:bg-blue-800 dark:hover:bg-yellow-400 transition duration-300">
+                            Book Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-gray-100 dark:bg-gray-800 py-16 theme-transition relative z-10">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 dark:text-white">Transforming Indian Aviation</h2>
+        
+            <!-- Challenges Section -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-6 text-center dark:text-white">Current Market Challenges</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 hover-scale challenge-card min-h-[200px]">
+                        <div class="text-red-500 text-4xl mb-4">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 dark:text-white">High Operational Costs</h4>
+                        <p class="text-gray-600 dark:text-gray-300">Indian airlines face <span id="operational-costs">0</span>% higher operational costs compared to global standards due to high fuel prices, airport charges, and maintenance costs.</p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 hover-scale challenge-card min-h-[200px]">
+                        <div class="text-red-500 text-4xl mb-4">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 dark:text-white">Price Wars</h4>
+                        <p class="text-gray-600 dark:text-gray-300">Intense competition has led to unsustainable pricing, with average fares <span id="price-wars">0</span>% below cost-recovery levels.</p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 hover-scale challenge-card min-h-[200px]">
+                        <div class="text-red-500 text-4xl mb-4">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 dark:text-white">Financial Distress</h4>
+                        <p class="text-gray-600 dark:text-gray-300">Multiple airlines including Jet Airways and Go First have faced bankruptcy, affecting market stability.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ryanair Advantage -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-6 text-center dark:text-white">Ryanair's Advantage</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 advantage-card min-h-[250px]">
+                        <h4 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">Cost Efficiency Model</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                <p class="text-gray-700 dark:text-gray-300">Single aircraft type fleet reducing maintenance costs</p>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                <p class="text-gray-700 dark:text-gray-300">Secondary airports with lower charges</p>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                <p class="text-gray-700 dark:text-gray-300">High aircraft utilization (12+ hours daily)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 advantage-card min-h-[250px]">
+                        <h4 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">Pricing Strategy</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                <p class="text-gray-700 dark:text-gray-300">Dynamic pricing based on demand</p>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                <p class="text-gray-700 dark:text-gray-300">Ancillary revenue optimization</p>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                <p class="text-gray-700 dark:text-gray-300">Lean operations with minimal overhead</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 price-comparison relative z-1">
+                <h3 class="text-2xl font-bold mb-6 text-center dark:text-white">Price Comparison</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-100 dark:bg-gray-800">
+                                <th class="p-4 text-left text-gray-900 font-bold dark:text-white">Route</th>
+                                <th class="p-4 text-left text-gray-900 font-bold dark:text-white">Ryanair</th>
+                                <th class="p-4 text-left text-gray-900 font-bold dark:text-white">Competitor A</th>
+                                <th class="p-4 text-left text-gray-900 font-bold dark:text-white">Competitor B</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b dark:border-gray-600">
+                                <td class="p-4 text-gray-800 font-medium dark:text-white">Delhi - Mumbai</td>
+                                <td class="p-4 text-green-600 dark:text-green-400 font-bold">₹4,999</td>
+                                <td class="p-4 text-gray-800 dark:text-gray-300">₹7,499</td>
+                                <td class="p-4 text-gray-800 dark:text-gray-300">₹6,999</td>
+                            </tr>
+                            <tr class="border-b dark:border-gray-600">
+                                <td class="p-4 text-gray-800 font-medium dark:text-white">Bangalore - Delhi</td>
+                                <td class="p-4 text-green-600 dark:text-green-400 font-bold">₹5,499</td>
+                                <td class="p-4 text-gray-800 dark:text-gray-300">₹8,999</td>
+                                <td class="p-4 text-gray-800 dark:text-gray-300">₹7,999</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 text-gray-800 font-medium dark:text-white">Mumbai - Kolkata</td>
+                                <td class="p-4 text-green-600 dark:text-green-400 font-bold">₹5,999</td>
+                                <td class="p-4 text-gray-800 dark:text-gray-300">₹9,499</td>
+                                <td class="p-4 text-gray-800 dark:text-gray-300">₹8,499</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Travel Tools -->
+    <div class="container mx-auto px-4 py-16 relative z-10">
+        <h2 class="text-3xl font-bold text-center mb-12 dark:text-white">Travel Tools</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Baggage Allowance Calculator -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 travel-tool-card min-h-[450px] relative">
+                <div class="flex items-center mb-6">
+                    <i class="fas fa-suitcase text-ryanair-blue dark:text-ryanair-yellow text-3xl mr-4"></i>
+                    <h3 class="text-2xl font-bold dark:text-white">Baggage Allowance Calculator</h3>
+                </div>
+                
+                <form id="baggageForm" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 dark:text-gray-300 mb-2">Fare Type</label>
+                        <select id="fareType" class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                            <option value="standard">Standard</option>
+                            <option value="plus">Ryanair Plus</option>
+                            <option value="premium">Ryanair Premium</option>
+                        </select>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Cabin Bags</label>
+                            <input type="number" id="cabinBags" min="0" max="2" value="1" class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Checked Bags</label>
+                            <input type="number" id="checkedBags" min="0" max="3" value="0" class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-ryanair-blue text-white py-2 rounded-lg font-bold hover:bg-blue-800 transition duration-300 baggage-calculate-btn">
+                        Calculate
+                    </button>
+                </form>
+                
+                <div id="baggageResult" class="mt-6 pt-6 border-t dark:border-gray-700 hidden">
+                    <h4 class="font-bold mb-4 dark:text-white">Your Baggage Allowance:</h4>
+                    <div class="space-y-2">
+                        <p class="flex justify-between">
+                            <span class="text-gray-700 dark:text-gray-300">Cabin baggage:</span>
+                            <span id="cabinAllowance" class="font-medium dark:text-white">1 x 10kg bag</span>
+                        </p>
+                        <p class="flex justify-between">
+                            <span class="text-gray-700 dark:text-gray-300">Checked baggage:</span>
+                            <span id="checkedAllowance" class="font-medium dark:text-white">None</span>
+                        </p>
+                        <p class="flex justify-between">
+                            <span class="text-gray-700 dark:text-gray-300">Additional fee:</span>
+                            <span id="baggageFee" class="font-medium dark:text-white">₹0</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Currency Converter -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 travel-tool-card min-h-[450px] relative">
+                <div class="flex items-center mb-6">
+                    <i class="fas fa-exchange-alt text-ryanair-blue dark:text-ryanair-yellow text-3xl mr-4"></i>
+                    <h3 class="text-2xl font-bold dark:text-white">Currency Converter</h3>
+                </div>
+                
+                <form id="currencyForm" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Amount</label>
+                            <input type="number" id="amount" min="1" value="100" class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">From</label>
+                            <select id="fromCurrency" class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                                <option value="INR" selected>Indian Rupee (₹)</option>
+                                <option value="EUR">Euro (€)</option>
+                                <option value="USD">US Dollar ($)</option>
+                                <option value="GBP">British Pound (£)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-center">
+                        <button type="button" id="swapCurrency" class="bg-gray-200 dark:bg-gray-700 p-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-300">
+                            <i class="fas fa-exchange-alt text-ryanair-blue dark:text-ryanair-yellow"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">To</label>
+                            <select id="toCurrency" class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                                <option value="INR">Indian Rupee (₹)</option>
+                                <option value="EUR" selected>Euro (€)</option>
+                                <option value="USD">US Dollar ($)</option>
+                                <option value="GBP">British Pound (£)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 dark:text-gray-300 mb-2">Result</label>
+                            <input type="text" id="result" readonly class="w-full p-2 border rounded-lg bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-ryanair-blue text-white py-2 rounded-lg font-bold hover:bg-blue-800 transition duration-300 currency-convert-btn">
+                        Convert
+                    </button>
+                </form>
+                
+                <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                    <p>* Exchange rates are for indicative purposes only.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-ryanair-blue dark:bg-gray-900 text-white py-8 theme-transition">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">About Ryanair</h3>
+                    <p class="text-gray-300">Europe's largest low-cost carrier now in India</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-ryanair-yellow">About Us</a></li>
+                        <li><a href="#" class="hover:text-ryanair-yellow">Contact</a></li>
+                        <li><a href="#" class="hover:text-ryanair-yellow">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li>Email: support@ryanair.in</li>
+                        <li>Phone: 1800-123-4567</li>
+                        <li>Address: New Delhi, India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p>&copy; 2024 Ryanair India. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+    <script src="theme-toggle.js"></script>
+    <script src="market-analysis.js"></script>
+    <script src="scroll-animations.js"></script>
+    <script src="persistent-animations.js"></script>
+    <script src="countdown-timer.js"></script>
+    <script src="travel-tools.js"></script>
+    <script src="chat-support.js"></script>
+</body>
+</html> 
