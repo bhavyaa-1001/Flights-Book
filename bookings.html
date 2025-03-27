@@ -157,11 +157,66 @@
         });
 
         // Get bookings from localStorage
-        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+        let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
         const bookingsList = document.getElementById('bookingsList');
+        
+        // Fix any bookings with missing passengerDetails
+        function fixBookingsData() {
+            let dataFixed = false;
+            
+            bookings = bookings.map(booking => {
+                // If passengerDetails is null or undefined, provide default empty object
+                if (!booking.passengerDetails) {
+                    booking.passengerDetails = {
+                        firstName: 'Guest',
+                        lastName: 'User',
+                        email: 'guest@example.com',
+                        phone: 'N/A',
+                        passportNumber: 'N/A',
+                        nationality: 'N/A',
+                        dateOfBirth: 'N/A'
+                    };
+                    dataFixed = true;
+                }
+                return booking;
+            });
+            
+            // If any fixes were made, update localStorage
+            if (dataFixed) {
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                console.log('Fixed bookings with missing passenger details');
+            }
+        }
+        
+        // Add animations to booking cards
+        function animateBookingCards() {
+            const bookingCards = document.querySelectorAll('.booking-card');
+            
+            bookingCards.forEach((card, index) => {
+                // Add staggered entrance animations
+                setTimeout(() => {
+                    card.classList.add('animate-fade-in');
+                }, index * 150);
+                
+                // Add bounce animation to download button
+                const downloadBtn = card.querySelector('button');
+                if (downloadBtn) {
+                    downloadBtn.addEventListener('mouseenter', () => {
+                        downloadBtn.classList.add('scale-animation');
+                    });
+                    
+                    downloadBtn.addEventListener('mouseleave', () => {
+                        downloadBtn.classList.remove('scale-animation');
+                    });
+                }
+            });
+        }
 
         // Display bookings
         function displayBookings() {
+            // Fix any data issues first
+            fixBookingsData();
+            
             if (bookings.length === 0) {
                 bookingsList.innerHTML = `
                     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center booking-card">
@@ -198,20 +253,28 @@
                             <h4 class="font-bold mb-2 dark:text-white">Passenger Details</h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <p class="text-gray-600 dark:text-gray-300">Name: ${booking.passengerDetails.firstName} ${booking.passengerDetails.lastName}</p>
-                                    <p class="text-gray-600 dark:text-gray-300">Email: ${booking.passengerDetails.email}</p>
-                                    <p class="text-gray-600 dark:text-gray-300">Phone: ${booking.passengerDetails.phone}</p>
+                                    <p class="text-gray-600 dark:text-gray-300">Name: ${booking.passengerDetails.firstName || 'N/A'} ${booking.passengerDetails.lastName || 'N/A'}</p>
+                                    <p class="text-gray-600 dark:text-gray-300">Email: ${booking.passengerDetails.email || 'N/A'}</p>
+                                    <p class="text-gray-600 dark:text-gray-300">Phone: ${booking.passengerDetails.phone || 'N/A'}</p>
                                 </div>
                                 <div>
-                                    <p class="text-gray-600 dark:text-gray-300">Passport: ${booking.passengerDetails.passportNumber}</p>
-                                    <p class="text-gray-600 dark:text-gray-300">Nationality: ${booking.passengerDetails.nationality}</p>
-                                    <p class="text-gray-600 dark:text-gray-300">DOB: ${booking.passengerDetails.dateOfBirth}</p>
+                                    <p class="text-gray-600 dark:text-gray-300">Passport: ${booking.passengerDetails.passportNumber || 'N/A'}</p>
+                                    <p class="text-gray-600 dark:text-gray-300">Nationality: ${booking.passengerDetails.nationality || 'N/A'}</p>
+                                    <p class="text-gray-600 dark:text-gray-300">DOB: ${booking.passengerDetails.dateOfBirth || 'N/A'}</p>
                                 </div>
                             </div>
                         </div>
-                    ` : ''}
+                    ` : `
+                        <div class="mt-6 border-t dark:border-gray-700 pt-6">
+                            <h4 class="font-bold mb-2 dark:text-white">Passenger Details</h4>
+                            <p class="text-gray-600 dark:text-gray-300">No passenger details available</p>
+                        </div>
+                    `}
                 </div>
             `).join('');
+            
+            // Apply animations after rendering
+            setTimeout(animateBookingCards, 100);
         }
 
         // Download ticket function
@@ -219,6 +282,10 @@
             const booking = bookings.find(b => b.bookingId === bookingId);
             if (booking) {
                 // Create ticket content
+                const passengerName = booking.passengerDetails ? 
+                    `${booking.passengerDetails.firstName || 'N/A'} ${booking.passengerDetails.lastName || 'N/A'}` : 
+                    'N/A';
+                
                 const ticketContent = `
                     Ryanair India - Flight Ticket
                     Booking ID: ${booking.bookingId}
@@ -227,7 +294,7 @@
                     To: ${booking.to}
                     Departure: ${booking.departure}
                     Arrival: ${booking.arrival}
-                    Passenger: ${booking.passengerDetails.firstName} ${booking.passengerDetails.lastName}
+                    Passenger: ${passengerName}
                     Date: ${new Date(booking.bookingDate).toLocaleDateString()}
                 `;
 

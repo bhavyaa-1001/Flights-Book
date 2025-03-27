@@ -1,29 +1,41 @@
-// Countdown timer functionality
-document.addEventListener('DOMContentLoaded', () => {
+// Countdown Timer JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all countdown timers
     const countdownTimers = document.querySelectorAll('.countdown-timer');
     
-    // Update all countdown timers
+    // Update all data-end attributes to be 3 days from now
+    const now = new Date();
+    const threeDaysFromNow = new Date(now.getTime() + (3 * 24 * 60 * 60 * 1000));
+    const threeDaysFormatted = threeDaysFromNow.toISOString().slice(0, 19);
+    
+    countdownTimers.forEach(timer => {
+        timer.setAttribute('data-end', threeDaysFormatted);
+    });
+    
+    // Function to update countdowns
     function updateCountdowns() {
-        const now = new Date().getTime();
-        
         countdownTimers.forEach(timer => {
-            const endTimeStr = timer.getAttribute('data-end');
-            const endTime = new Date(endTimeStr).getTime();
+            const endTime = new Date(timer.getAttribute('data-end')).getTime();
+            const now = new Date().getTime();
             const timeLeft = endTime - now;
             
-            // Find elements to update
+            // Get elements
             const daysElement = timer.querySelector('.countdown-days');
             const hoursElement = timer.querySelector('.countdown-hours');
             const minutesElement = timer.querySelector('.countdown-minutes');
             
             if (timeLeft <= 0) {
                 // Offer expired
-                daysElement.textContent = '00';
-                hoursElement.textContent = '00';
-                minutesElement.textContent = '00';
+                if (daysElement) daysElement.textContent = '00';
+                if (hoursElement) hoursElement.textContent = '00';
+                if (minutesElement) minutesElement.textContent = '00';
                 
-                // Add expired class for styling
-                timer.closest('.deal-card').classList.add('deal-expired');
+                // Find the parent deal card and mark as expired
+                const dealCard = timer.closest('.deal-card');
+                if (dealCard && !dealCard.classList.contains('deal-expired')) {
+                    dealCard.classList.add('deal-expired');
+                }
+                
                 return;
             }
             
@@ -32,58 +44,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             
-            // Update the timer elements
-            daysElement.textContent = String(days).padStart(2, '0');
-            hoursElement.textContent = String(hours).padStart(2, '0');
-            minutesElement.textContent = String(minutes).padStart(2, '0');
+            // Update display
+            if (daysElement) daysElement.textContent = days < 10 ? `0${days}` : days;
+            if (hoursElement) hoursElement.textContent = hours < 10 ? `0${hours}` : hours;
+            if (minutesElement) minutesElement.textContent = minutes < 10 ? `0${minutes}` : minutes;
             
-            // Add animations based on urgency
-            if (days === 0 && hours < 12) {
-                timer.classList.add('urgent-countdown');
-                
-                // Pulse animation for urgency
-                if (!timer.classList.contains('pulse-animation')) {
-                    timer.querySelectorAll('div').forEach(element => {
-                        element.classList.add('pulse-animation');
-                    });
+            // Add urgent styling if time is running out (less than 24 hours)
+            if (timeLeft < (24 * 60 * 60 * 1000)) {
+                if (!timer.classList.contains('urgent-countdown')) {
+                    timer.classList.add('urgent-countdown');
+                    
+                    // If this is a deal, add extra attention to the price
+                    const priceElement = timer.closest('.deal-card')?.querySelector('.text-red-600');
+                    if (priceElement) {
+                        priceElement.classList.add('scale-animation');
+                    }
                 }
             }
         });
     }
     
-    // Apply deal card animations
-    function applyDealAnimations() {
-        const dealCards = document.querySelectorAll('.deal-card');
-        
-        dealCards.forEach((card, index) => {
-            // Add staggered entrance animations
-            setTimeout(() => {
-                card.classList.add('animate-fade-in');
-            }, index * 200);
-            
-            // Add hover effects
-            card.addEventListener('mouseenter', () => {
-                const discount = card.querySelector('.bg-red-600');
-                if (discount) {
-                    discount.classList.add('scale-animation');
-                }
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                const discount = card.querySelector('.bg-red-600');
-                if (discount) {
-                    discount.classList.remove('scale-animation');
-                }
-            });
-        });
-    }
+    // Initial update
+    updateCountdowns();
     
-    // Initialize animations
-    applyDealAnimations();
-    
-    // Initialize and start countdown
-    if (countdownTimers.length > 0) {
-        updateCountdowns();
-        setInterval(updateCountdowns, 60000); // Update every minute
-    }
+    // Update every minute
+    setInterval(updateCountdowns, 60000);
 }); 

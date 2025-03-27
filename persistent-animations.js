@@ -78,9 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
         potentialFlipCards.forEach(card => {
             // Only transform if it's not already a flip card
             if (!card.classList.contains('flip-container')) {
-                // Store the original content and dimensions
-                const originalContent = card.innerHTML;
-                const cardHeight = Math.max(card.offsetHeight, 250); // Ensure minimum height
+                // Create a clone of the original card to preserve for front
+                const cardClone = card.cloneNode(true);
+                
+                // Store original content and extract information
                 const title = card.querySelector('h4')?.textContent || 'Ryanair Advantage';
                 
                 // Extract bullet points for back of card
@@ -90,11 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     bulletPoints.push(point.textContent);
                 });
                 
-                // Create flip card structure
-                card.classList.add('flip-container');
-                card.style.minHeight = `${cardHeight}px`;
-                
-                // Create a more detailed back side with the bullet points
+                // Create bullet points HTML for back side
                 let bulletPointsHTML = '';
                 if (bulletPoints.length > 0) {
                     bulletPointsHTML = `
@@ -103,13 +100,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     </ul>`;
                 }
                 
-                card.innerHTML = `
+                // Clear the original card's content
+                card.innerHTML = '';
+                
+                // Add flip container classes
+                card.classList.add('flip-container');
+                
+                // Create flip card structure with properly contained content
+                const flipCardHTML = `
                     <div class="flip-card">
                         <div class="flip-front">
-                            ${originalContent}
+                            ${cardClone.innerHTML}
                         </div>
-                        <div class="flip-back p-6 flex flex-col justify-center">
-                            <div class="text-center">
+                        <div class="flip-back">
+                            <div class="text-center p-6">
                                 <h4 class="text-xl font-bold text-white mb-4">${title}</h4>
                                 <p class="text-white">Ryanair delivers excellence</p>
                                 ${bulletPointsHTML}
@@ -118,6 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
                 `;
+                
+                // Set the new content
+                card.innerHTML = flipCardHTML;
             }
         });
     };

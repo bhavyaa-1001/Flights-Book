@@ -129,14 +129,14 @@
     animation: permanent-slide-left 0.7s ease-in-out forwards;
 }
 
-/* Flip card animations */
+/* Completely revised flip card animations to fix text reversal */
 .flip-container {
     perspective: 1000px;
     height: 100%;
     min-height: 250px;
     position: relative;
     z-index: 1;
-    overflow: hidden;
+    transform: translateZ(0);
 }
 
 .flip-container:hover {
@@ -157,34 +157,49 @@
 
 .flip-front, .flip-back {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     border-radius: 0.5rem;
-    transform-style: preserve-3d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .flip-front {
     z-index: 2;
-    -webkit-transform: rotateY(0deg);
     transform: rotateY(0deg);
+    background: white;
 }
 
-.flip-back {
-    -webkit-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-    background: #073590;
-}
-
-.dark .flip-back {
+.dark .flip-front {
     background: #1f2937;
 }
 
-.flip-back h4,
-.flip-back p,
-.flip-back div {
-    color: white !important;
+.flip-back {
+    transform: rotateY(180deg);
+    background: rgba(7, 53, 144, 1);
+    color: white;
+}
+
+.dark .flip-back {
+    background: rgba(31, 41, 55, 1);
+}
+
+/* Force text direction to remain normal even when flipped */
+.flip-back * {
+    /* Counter the parent rotation to ensure text is readable */
+    transform: rotateY(0deg);
+    color: white;
+}
+
+/* Reset any text shadows */
+.flip-front *,
+.flip-back * {
+    text-shadow: none;
 }
 
 /* Glow animations */
@@ -370,4 +385,18 @@
 /* Ensure sections stack properly */
 .container {
     position: relative;
+}
+
+/* Scale animation for buttons */
+.scale-animation {
+    animation: scaleAnimation 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes scaleAnimation {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.05);
+    }
 } 
